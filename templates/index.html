@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+</head>
+<body>
+    <h1>{{.Title}}</h1>
+
+    <p>Hello, {{.Name}}!</p>
+
+    {{if .IsLogin}}
+    <p>Status: logged in</p>
+    {{else}}
+    <p>Status: guest</p>
+    {{end}}
+</body>
+</html>
