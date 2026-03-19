@@ -1,6 +1,7 @@
 package demo
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -135,6 +136,34 @@ func RunHttpRequest() {
 
 		log.Printf("upload success: %s (%d bytes)", filename, n)
 		_, _ = fmt.Fprintf(writer, "upload success: %s (%d bytes)\n", filename, n)
+	})
+
+	type Student struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Age  int    `json:"age"`
+	}
+	// json
+	http.HandleFunc("/json", func(writer http.ResponseWriter, request *http.Request) {
+		stu := Student{}
+
+		switch request.Method {
+		case http.MethodPost:
+			decoder := json.NewDecoder(request.Body)
+			err := decoder.Decode(&stu) // 从请求体中解析 JSON 数据到 stu 结构体
+			if err != nil {
+				writer.WriteHeader(http.StatusBadRequest)
+				return
+			}
+
+			encoder := json.NewEncoder(writer)
+			err = encoder.Encode(stu) // 将 stu 结构体编码为 JSON 格式写入响应体
+			if err != nil {
+				writer.WriteHeader(http.StatusBadRequest)
+			}
+		default:
+			http.Error(writer, "only POST is supported", http.StatusMethodNotAllowed)
+		}
 	})
 
 	err := server.ListenAndServe()

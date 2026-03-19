@@ -31,7 +31,8 @@ func RunDatabase() {
 	}
 
 	db.TestQuery(userID)
-    db.DropUsersTable()
+	db.TestQueryMany()
+	db.DropUsersTable()
 }
 
 func connect() *DB {
@@ -66,11 +67,24 @@ func (db *DB) TestQuery(id int64) {
 	fmt.Println(name)
 }
 
-func (db *DB) CreateUsersTable() error {
-    ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-    defer cancel()
+func (db *DB) TestQueryMany() {
+	rows, err := db.Query("SELECT id, name FROM users")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for rows.Next() {
+		var id int64
+		var name string
+		rows.Scan(&id, &name)
+		fmt.Println(id, name)
+	}
+}
 
-    query := `
+func (db *DB) CreateUsersTable() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -82,16 +96,13 @@ CREATE TABLE IF NOT EXISTS users (
     UNIQUE KEY uk_users_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`
 
-    _, err := db.ExecContext(ctx, query)
-    return err
+	_, err := db.ExecContext(ctx, query)
+	return err
 }
 
 func (db *DB) DropUsersTable() error {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
 	query := `DROP TABLE IF EXISTS users;`
-	_, err := db.ExecContext(ctx, query)
+	_, err := db.Exec(query)
 	return err
 }
 

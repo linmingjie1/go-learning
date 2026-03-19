@@ -8,5 +8,10 @@ func main() {
 	//demo.RunHttpResponse()
 	//demo.RunTemplate()
 
-	demo.RunDatabase()
+	//demo.RunDatabase()
+	//demo.RunGin()
+
+	//demo.RunTestController()
+
+	demo.RunJson()
 }
