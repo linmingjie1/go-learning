@@ -4,7 +4,7 @@ import "go-learning/demo"
 
 func main() {
 	//demo.RunHttpHandlers()
-	//demo.RunHttpRequest()
+	demo.RunHttpRequest()
 	//demo.RunHttpResponse()
 	//demo.RunTemplate()
 
@@ -13,5 +13,5 @@ func main() {
 
 	//demo.RunTestController()
 
-	demo.RunJson()
+	//demo.RunJson()
 }
