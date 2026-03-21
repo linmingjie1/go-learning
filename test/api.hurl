@@ -1,4 +1,6 @@
 GET http://127.0.0.1:8080/
+Authorization: Bearer test
+
 
 POST http://127.0.0.1:8080/json
 Content-Type: application/json

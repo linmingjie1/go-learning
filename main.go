@@ -3,15 +3,17 @@ package main
 import "go-learning/demo"
 
 func main() {
-	//demo.RunHttpHandlers()
-	demo.RunHttpRequest()
-	//demo.RunHttpResponse()
-	//demo.RunTemplate()
+    //demo.RunHttpHandlers()
+    //demo.RunHttpRequest()
+    //demo.RunHttpResponse()
+    //demo.RunTemplate()
 
-	//demo.RunDatabase()
-	//demo.RunGin()
+    //demo.RunDatabase()
+    //demo.RunGin()
 
-	//demo.RunTestController()
+    //demo.RunTestController()
 
-	//demo.RunJson()
+    //demo.RunJson()
+
+    demo.RunHttpPprof()
 }
